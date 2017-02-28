@@ -11,14 +11,15 @@
         padding: 0;
       }
       #map {
-        height: 50%;
-        width:50%;
+        height: 100%;
+        width:100%;
       }
     </style>
   </head>
   <body>
     <div id="map"></div>
     <script src="assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="js/login.js"></script>
     <script>
 
 // This example creates a 2-pixel-wide red polyline showing the path of William
@@ -27,16 +28,17 @@
 var val=[];
 var center=new Object;
 $(function(){
+  var id=$.UrlParam("id");
   $.ajax({
         async:false,
-        url: "api/record.php",
+        url: "api/map.php",
         type: "POST",
         dataType: "json",
         data:{
-            id:1,
+            id:id,
         },
         success: function(data) {
-
+            console.log(data);
             var lat=data[0]["map_latitude"].split(",");
             var lng=data[0]["map_longitude"].split(",");
             var num=(lat.length-1)/2|0;

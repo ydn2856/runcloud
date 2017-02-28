@@ -61,19 +61,7 @@
 
 <section class="engine"><a rel="external" href="https://mobirise.com">easy drag and drop site creator</a></section><section class="mbr-cards mbr-section mbr-section-nopadding mbr-after-navbar" id="rank_person-features3-0" style="background-color: rgb(255, 255, 255);">
 
-    <div class="mbr-section mbr-section__container mbr-section__container--middle">
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12 text-xs-center">
-                  <h3 class="mbr-section-title display-2">校內排行榜</h3>
-                  <small class="mbr-section-subtitle"><font color="#000000" style="font-style: normal;">(由計算後分數所排名)</font><br><font color="#000000" style="font-style: normal;"><strong>我的排名：____</strong></font></small>
-              </div>
-          </div>
-      </div>
-    </div>
 
-
-	
 	<div  id="tableHolder" ></div>
 	
 	
@@ -91,7 +79,8 @@
   <script src="js/login.js"></script>
   
   <script>
-  $(function() {
+  var account;
+	$(function() {
     var t=check_login(0);
     if(t=="yes"){
       $("#login_btn").text("登出");
@@ -101,34 +90,24 @@
       });
     }
   });
-  $.ajax({
-	url:"rank_person.php",
-	type: "post",
-	success: function(response){
-		console.log(response);
-		}
-	error: function(){
-		console.log("ajax error!")
-		}
-  })
-  
-  
-  
   
   </script>
   <script type="text/javascript">
-
+	  
    $(document).ready(function(){
       refreshTable();
     });
 
     function refreshTable(){
-        $('#tableHolder').load('rank_person.php', function(){
-           setTimeout(refreshTable, 5000);
+	    account=$.UrlParam("acc");
+        $('#tableHolder').load('rank_person.php?acc='+account, function(){
+          
         });
     }
-			
+
   </script>
+  
+  
   <input name="animation" type="hidden">
   </body>
 </html>

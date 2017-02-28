@@ -1,4 +1,6 @@
 ﻿<?php
+	$account = $_GET["acc"];
+	
 	$conn = mysql_connect('localhost','root','runcloud');
 	/*if(!$conn)
 		{die("無法建立連線");}
@@ -16,7 +18,14 @@
 	
 	$result=mysql_query("select * from personal_rank");
 	
+	$result2=mysql_query("select personal.personal_id,Max(record.calorie),personal.nickname,personal.account from record cross join personal where record.personal_id=personal.personal_id and account='$account' group by personal_id order by record.calorie desc");
+	//資料表 personal_id  卡路里加總 暱稱 帳號
 	$list_arr=array();
+	
+	$rs=mysql_fetch_array($result2);
+	
+	$result3=mysql_query("select * from personal_rank where nickname='$rs[2]' and personal_score='$rs[1]'");
+	
 	/*$i=0;
 
 	while($row = mysql_fetch_array($result))
@@ -44,11 +53,42 @@
 <p>
 
 </p>
-<table  data-role="table" data-mode="columntoggle" class="table table-striped ui-responsive container text-center"  id="rank-table" border="1">
-   <tr style="background:#82CAFA;">
-    <td >排名</td>
-    <td >姓名</td>
-    <td >卡路里</td>
+
+<?php
+	$rs=mysql_fetch_array($result3);
+  //rs[1] 姓名 [2]卡路里 [3]名次
+  
+  ?>
+	<div class="mbr-section mbr-section__container mbr-section__container--middle">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 text-xs-center">
+                  <h3 class="mbr-section-title display-2">校內排行榜</h3>
+                  <small class="mbr-section-subtitle"><font color="#000000" style="font-style: normal;">(由計算後分數所排名)</font><br><font color="#000000" style="font-style: normal;"><strong>我的排名：<?php echo $rs[3]?></strong></font></small>
+              </div>
+          </div>
+      </div>
+    </div>
+
+	
+<?php
+
+$m=date(m);
+$d=date(d);
+$H=date(H);
+
+echo "刷新日期：";
+
+echo date( "Y年m月d日H時", mktime($H-1,$m,$d) );;
+?>
+
+
+
+<table  data-role="table" data-mode="columntoggle" class="table table-striped ui-responsive container text-center"  id="rank-table" >
+   <tr style="background:#F79545 ;">
+    <td  align="center"><font size = "5">排名</font></td>
+    <td  align="center"><font size = "5">姓名</font></td>
+    <td  align="center"> <font size = "5">卡路里</font></td>
  
  
   </tr>
@@ -59,9 +99,9 @@
   ?>
   <tr>
 	
-    <td><?php echo $rs[3]?></td>
-    <td><?php echo $rs[1]?></td>
-    <td><?php echo $rs[2]?></td>
+    <td align="center"><font size = "4"><?php echo $rs[3]?></font></td>
+    <td align="center"><font size = "4"><?php echo $rs[1]?></font></td>
+    <td align="center"><font size = "4"><?php echo $rs[2]?></font></td>
 
   </tr>
   
