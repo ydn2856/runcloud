@@ -90,9 +90,12 @@
   <script src="js/login.js"></script>
 
   <script>
+  var acc;
   $(function() {
     var t=check_login(0);
     if(t=="yes"){
+	  $("#exCollapsingNavbar > li:nth-child(2) > div > a:nth-child(2)").attr("href","rank_person.html?acc=" + acc);
+	  $("#exCollapsingNavbar > li:nth-child(2) > div > a:nth-child(1)").attr("href","ranking.html?acc=" + acc);
       $("#login_btn").text("登出");
       $("#login_btn").attr("href","#");
       $("#login_btn").click(function(){
@@ -108,7 +111,8 @@
     });
 
     function refreshTable(){
-        $('#tableHolder').load('ranking.php', function(){
+	    acc=$.UrlParam("acc");
+        $('#tableHolder').load('ranking.php?acc='+acc, function(){
           
         });
     }

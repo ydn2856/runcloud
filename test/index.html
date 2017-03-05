@@ -228,6 +228,8 @@
   <script src="assets/theme/js/script.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
   <script src="js/login.js"></script>
+ 
+  
   <script>
     var status;
     var acc;
@@ -235,6 +237,7 @@
     var json;
     var article_id;
     var comment_json;
+	
     $(function(){
       status = $.UrlParam("v");
       acc=$.UrlParam("acc");
@@ -246,6 +249,8 @@
       }
       var t=check_login(0);
       if(t=="yes"){
+		$("#exCollapsingNavbar > li:nth-child(2) > div > a:nth-child(2)").attr("href","rank_person.html?acc=" + acc);
+		$("#exCollapsingNavbar > li:nth-child(2) > div > a:nth-child(1)").attr("href","ranking.html?acc=" + acc);
         $("#login_btn").text("登出");
         $("#login_btn").attr("href","#");
         $("#login_btn").click(function(){
@@ -253,7 +258,10 @@
         });
       }
       getlist();
+
     });
+	
+	
     $(document).ready(function() {
         $('#summernote').summernote({
             height: 600,
@@ -326,6 +334,7 @@
       });
     }
     function getlist(){
+	 
       $.ajax({
             url: "api/article_list.php",
             type: "POST",

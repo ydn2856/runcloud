@@ -373,23 +373,6 @@
    $(document).ready(function(){
       refreshTable();
     });
-	$('#submit').click(function (){
-         $.ajax({
-         url: 'rank_person.php',
-         cache: false,
-         dataType: "text",
-             type:"POST",
-         data: { 
-			acc: $("#account").val()
-			},
-         error: function(xhr) {
-           alert('Ajax request 發生錯誤');
-         },
-         success: function(response) {
-           alert('Ajax request 傳輸成功');
-         }
-     });
-    });
 	
     function refreshTable(){
         $('#schoollist').load('loginlist.php', function(){

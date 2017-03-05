@@ -41,12 +41,29 @@
 
                 </div>
                 <div class="mbr-table-cell">
-
                     <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                         <div class="hamburger-icon"></div>
                     </button>
+                    
+                    <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
+                        <li class="nav-item">
+                            <a class="nav-link link" href="index.html" aria-expanded="false">討論板</a>
+                        </li>
+                        <li class="nav-item dropdown open">
+                            <a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="ranking.html" aria-expanded="true">排行榜</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="ranking.html">校際排行</a>
+                                <a class="dropdown-item" href="rank_person.html">校內排行</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link" href="record.html" aria-expanded="false">紀錄</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="login_btn" class="nav-link link" href="login.html" aria-expanded="false">登入</a>
+                        </li>
+                    </ul>
 
-                    <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar"><li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="#" aria-expanded="false">討論板</a><div class="dropdown-menu"><a class="dropdown-item" href="index.html">全部</a><a class="dropdown-item" href="#">哈拉區</a><a class="dropdown-item" href="#">裝備區</a><a class="dropdown-item" href="#">路線區</a></div></li><li class="nav-item dropdown open"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="ranking.html" aria-expanded="true">排行榜</a><div class="dropdown-menu"><a class="dropdown-item" href="ranking.html">校際排行</a><a class="dropdown-item" href="rank_person.html">校內排行</a></div></li><li class="nav-item"><a class="nav-link link" href="record.html" aria-expanded="false">紀錄</a></li><li class="nav-item"><a id="login_btn" class="nav-link link" href="#" aria-expanded="false">登入</a></li><li class="nav-item"><a class="nav-link link" href="#"></a></li><li class="nav-item"><a class="nav-link link" href="#"></a></li></ul>
                     <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                         <div class="close-icon"></div>
                     </button>
@@ -59,20 +76,9 @@
 
 </section>
 
-<section class="engine"><a rel="external" href="https://mobirise.com">best drag and drop web site maker software</a></section><section class="mbr-section mbr-after-navbar" id="index-pricing-table2-0" style="background-color: rgb(255, 255, 255); padding-top: 120px; padding-bottom: 120px;">
+<section class="engine"><a rel="external" href="https://mobirise.com">best drag and drop web site maker software</a></section><section class="mbr-section mbr-after-navbar" id="index-pricing-table2-0" style="background-color: rgb(255, 255, 255); padding-top: 30px; padding-bottom: 30px;">
 
 
-
-    <div class="mbr-section mbr-section__container mbr-section__container--middle">
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12 text-xs-center">
-                  <h3 class="mbr-section-title display-2">校際排行榜</h3>
-                  <small class="mbr-section-subtitle"><font color="#000000" style="font-style: normal;">(由計算後分數所排名)</font><br><font color="#000000" style="font-style: normal;"><strong>我的學校排名：____</strong></font></small>
-              </div>
-          </div>
-      </div>
-    </div>
 
     <div class="mbr-section mbr-section-nopadding mbr-price-table">
       <div class="row">
@@ -83,17 +89,7 @@
 			
 	
 			
- <script type="text/javascript">
-	 $(document).ready(function(){
-      refreshTable();
-    });
-
-    function refreshTable(){
-        $('#tableHolder').load('api/ranking.php', function(){
-           setTimeout(refreshTable, 5000);
-        });
-    }
-</script>	
+ 
           </div>
     </div>
 
@@ -111,17 +107,23 @@
   <script src="js/login.js"></script>
 
   <script>
-  $(function() {
-    var t=check_login(0);
-    if(t=="yes"){
-      $("#login_btn").text("登出");
-      $("#login_btn").attr("href","#");
-      $("#login_btn").click(function(){
-        window.location.href="login.html?logout=0";
-      });
-    }
-  });
+        $(function() {
+            var t=check_login(0);
+            if(t=="yes"){
+                $("#login_btn").text("登出");
+                $("#login_btn").attr("href","login.html?logout=0");
+                var acc=get_acc();
+                refreshTable(acc);
+            }else{
+                $('#tableHolder').load('ranking.php?acc='+acc);
+            }
+        });
 
+        function refreshTable(acc){
+            $('#tableHolder').load('ranking.php?acc='+acc, function(){
+            
+            });
+        }
   </script>
   <input name="animation" type="hidden">
   </body>

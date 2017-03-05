@@ -41,12 +41,29 @@
 
                 </div>
                 <div class="mbr-table-cell">
-
                     <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                         <div class="hamburger-icon"></div>
                     </button>
+                    
+                    <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
+                        <li class="nav-item">
+                            <a class="nav-link link" href="index.html" aria-expanded="false">討論板</a>
+                        </li>
+                        <li class="nav-item dropdown open">
+                            <a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="ranking.html" aria-expanded="true">排行榜</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="ranking.html">校際排行</a>
+                                <a class="dropdown-item" href="rank_person.html">校內排行</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link" href="record.html" aria-expanded="false">紀錄</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="login_btn" class="nav-link link" href="login.html" aria-expanded="false">登入</a>
+                        </li>
+                    </ul>
 
-                    <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar"><li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="#" aria-expanded="false">討論板</a><div class="dropdown-menu"><a class="dropdown-item" href="index.html">全部</a><a class="dropdown-item" href="#">哈拉區</a><a class="dropdown-item" href="#">裝備區</a><a class="dropdown-item" href="#">路線區</a></div></li><li class="nav-item dropdown open"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="ranking.html" aria-expanded="true">排行榜</a><div class="dropdown-menu"><a class="dropdown-item" href="ranking.html">校際排行</a><a class="dropdown-item" href="rank_person.html">校內排行</a></div></li><li class="nav-item"><a class="nav-link link" href="record.html" aria-expanded="false">紀錄</a></li><li class="nav-item"><a id="login_btn" class="nav-link link" href="#" aria-expanded="false">登入</a></li><li class="nav-item"><a class="nav-link link" href="#"></a></li><li class="nav-item"><a class="nav-link link" href="#"></a></li></ul>
                     <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                         <div class="close-icon"></div>
                     </button>
@@ -61,19 +78,7 @@
 
 <section class="engine"><a rel="external" href="https://mobirise.com">easy drag and drop site creator</a></section><section class="mbr-cards mbr-section mbr-section-nopadding mbr-after-navbar" id="rank_person-features3-0" style="background-color: rgb(255, 255, 255);">
 
-    <div class="mbr-section mbr-section__container mbr-section__container--middle">
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12 text-xs-center">
-                  <h3 class="mbr-section-title display-2">校內排行榜</h3>
-                  <small class="mbr-section-subtitle"><font color="#000000" style="font-style: normal;">(由計算後分數所排名)</font><br><font color="#000000" style="font-style: normal;"><strong>我的排名：____</strong></font></small>
-              </div>
-          </div>
-      </div>
-    </div>
 
-
-	
 	<div  id="tableHolder" ></div>
 	
 	
@@ -88,47 +93,30 @@
   <script src="assets/dropdown/js/script.min.js"></script>
   <script src="assets/touchSwipe/jquery.touchSwipe.min.js"></script>
   <script src="assets/theme/js/script.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
   <script src="js/login.js"></script>
   
   <script>
-  $(function() {
-    var t=check_login(0);
-    if(t=="yes"){
-      $("#login_btn").text("登出");
-      $("#login_btn").attr("href","#");
-      $("#login_btn").click(function(){
-        window.location.href="login.html?logout=0";
-      });
-    }
-  });
-  $.ajax({
-	url:"api/rank_person.php",
-	type: "post",
-	success: function(response){
-		console.log(response);
-		},
-	error: function(){
-		console.log("ajax error!")
-		}
-  })
-  
-  
-  
-  
-  </script>
-  <script type="text/javascript">
-
-   $(document).ready(function(){
-      refreshTable();
+	$(function() {
+        var t=check_login(0);
+        if(t=="yes"){
+            $("#login_btn").text("登出");
+            $("#login_btn").attr("href","login.html?logout=0");
+            var acc=get_acc();
+            refreshTable(acc);
+        }else{
+            $('#tableHolder').load('rank_person.php?acc='+acc);
+        }
     });
 
-    function refreshTable(){
-        $('#tableHolder').load('api/rank_person.php', function(){
-           setTimeout(refreshTable, 5000);
+    function refreshTable(acc){
+        $('#tableHolder').load('rank_person.php?acc='+acc, function(){
+          
         });
     }
-			
   </script>
+  
+  
   <input name="animation" type="hidden">
   </body>
 </html>

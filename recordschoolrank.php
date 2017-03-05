@@ -14,24 +14,26 @@
 	else
 		{echo "成功開啟runcloud<br>";}*/
 	
-	//清空資料表
-	$sql="truncate table personal_rank";
+	
+	$sql="truncate table school_rank";
 	mysql_query($sql) or die("清空失敗");
 	
 	
-	$result=mysql_query("select personal.personal_id,Sum(record.calorie) , personal.nickname from record cross join personal where record.personal_id=personal.personal_id group by personal_id order by Sum(record.calorie) desc");
+	
+	
+	$result=mysql_query("select personal.personal_id,sum(record.calorie) , personal.nickname,school.school_id,school.school_name from record inner join (personal inner join school on personal.school_id = school.school_id)on personal.personal_id=record.personal_id  group by personal_id order by record.calorie desc;");
 	
 	$list_arr=array();
 
   for($i=1;$i<=mysql_num_rows($result);$i++){
 	$rs=mysql_fetch_array($result);
-  //rs[1]卡路里 [2]名字 
+  //rs  [1]personal_id [2]卡路里 [3]名字 [4]學校id [5]學校名稱
    
 	///////
 	
-	$sql2="insert into personal_rank(nickname,personal_score,peraonal_place,self_evaluation) values ('$rs[2]','$rs[1]','$i','0')";
-	mysql_query($sql2) or die("mysql_error");
-	///////
+	$sql="insert into school_rank(school_place,school_score,school_name) values ('$i','$rs[1]','$rs[4]')";
+	mysql_query($sql) or die("mysql_error");
+	
 }
  
 	mysql_close($conn);
@@ -52,9 +54,3 @@
 	*/
 	//echo json_encode($list_arr);
 ?>
-
-<script language="Javascript">
-var speed = 1;
-setTimeout("history.back()", speed);
-</script>
-	

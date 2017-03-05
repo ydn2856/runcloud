@@ -76,13 +76,16 @@
   <script src="assets/dropdown/js/script.min.js"></script>
   <script src="assets/touchSwipe/jquery.touchSwipe.min.js"></script>
   <script src="assets/theme/js/script.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
   <script src="js/login.js"></script>
   
   <script>
-  var account;
+  var acc;
 	$(function() {
     var t=check_login(0);
     if(t=="yes"){
+	  $("#exCollapsingNavbar > li:nth-child(2) > div > a:nth-child(2)").attr("href","rank_person.html?acc=" + acc);
+	  $("#exCollapsingNavbar > li:nth-child(2) > div > a:nth-child(1)").attr("href","ranking.html?acc=" + acc);
       $("#login_btn").text("登出");
       $("#login_btn").attr("href","#");
       $("#login_btn").click(function(){
@@ -90,7 +93,6 @@
       });
     }
   });
-  
   </script>
   <script type="text/javascript">
 	  
@@ -99,8 +101,8 @@
     });
 
     function refreshTable(){
-	    account=$.UrlParam("acc");
-        $('#tableHolder').load('rank_person.php?acc='+account, function(){
+	    acc=$.UrlParam("acc");
+        $('#tableHolder').load('rank_person.php?acc='+acc, function(){
           
         });
     }
